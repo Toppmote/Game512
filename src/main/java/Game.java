@@ -4,6 +4,11 @@
 public class Game {
 
     /**
+     * Размер стороны поля
+     */
+    private final int SIDE_SIZE = 4;
+
+    /**
      * Игровое поле
      */
     private short[][] field;
@@ -14,7 +19,7 @@ public class Game {
     private int points;
 
     public Game() {
-        this.field = new short[3][3];
+        this.field = new short[SIDE_SIZE][SIDE_SIZE];
         this.points = 0;
     }
 
