@@ -264,6 +264,19 @@ public class Game {
         this.gameField[indexes[0]][indexes[1]] = 2;
     }
 
+    /**
+     * Процедура печати игрового поля
+     */
+    private void printField() {
+        System.out.println();
+        for (int[] row : gameField) {
+            for (int numbers : row) {
+                System.out.print(numbers + "\t");
+            }
+            System.out.println();
+        }
+    }
+
     public int[][] getField() {
         return gameField;
     }
