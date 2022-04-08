@@ -224,6 +224,30 @@ public class Game {
                 .max().orElse(0) == 512;
     }
 
+    /**
+     * Функция проверки игры на проигрыш
+     *
+     * @return true - если проигрыш, false - если игра продолжается
+     */
+    private boolean checkLoss() {
+        int minValue = Arrays.stream(gameField)
+                .flatMapToInt(Arrays::stream)
+                .max().orElse(0);
+        if (minValue != 0) {
+            for (int[] row : this.gameField) {
+                for (int i = 1; i < SIDE_SIZE - 1; i++)
+                    if (row[i] == row[i - 1] || row[i] == row[i + 1])
+                        return false;
+            }
+            for (int i = 0; i < SIDE_SIZE; i++)
+                for (int j = 1; j < SIDE_SIZE - 1; j++)
+                    if (this.gameField[i][j] == this.gameField[i][j - 1] || this.gameField[i][j] == this.gameField[i][j + 1])
+                        return false;
+            return true;
+        } else
+            return false;
+    }
+
     public int[][] getField() {
         return gameField;
     }
