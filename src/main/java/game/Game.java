@@ -1,3 +1,5 @@
+package game;
+
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -29,7 +31,7 @@ public class Game {
      * Процедура печати правил
      */
     private void printRules() {
-        final String RULES_STRING = "Game 512.\n" + "Двигайте цифры вверх вниз влево или право соединяя одинаковые цифры." +
+        final String RULES_STRING = "game.Game 512.\n" + "Двигайте цифры вверх вниз влево или право соединяя одинаковые цифры." +
                 "Как только значение одной клетки достигнет 512 - вы победили. Если вы не сможете больше двигать цифры - " +
                 "вы проиграли.\n";
         System.out.print(RULES_STRING);

@@ -1,3 +1,4 @@
+import game.Game;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -44,7 +45,7 @@ public class GameTest {
      */
     @Test
     void printRulesTest() throws Exception {
-        final String RULES_STRING = "Game 512.\n" + "Двигайте цифры вверх вниз влево или право соединяя одинаковые цифры." +
+        final String RULES_STRING = "game.Game 512.\n" + "Двигайте цифры вверх вниз влево или право соединяя одинаковые цифры." +
                 "Как только значение одной клетки достигнет 512 - вы победили. Если вы не сможете больше двигать цифры - " +
                 "вы проиграли.\n";
         Method printRules = Game.class.getDeclaredMethod("printRules");
