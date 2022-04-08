@@ -97,37 +97,66 @@ public class Game {
         boolean isMoved = false;
         for (int i = 0; i < SIDE_SIZE; i++) {
             int[] newRow = Arrays.copyOf(this.gameField[i], SIDE_SIZE);
-            boolean isSlided = false;
-            boolean[] isCombined = new boolean[SIDE_SIZE];
-            for (int j = SIDE_SIZE - 2; j >= 0; j--) {
-                if (newRow[j] == 0)
-                    continue;
-                while (j != SIDE_SIZE - 1) {
-                    if (newRow[j + 1] == 0) {
-                        newRow[j + 1] = newRow[j];
-                        newRow[j++] = 0;
-
-                        isSlided = true;
-                    } else
-                        break;
-                }
-                if (j == SIDE_SIZE - 1)
-                    continue;
-                if (newRow[j + 1] == newRow[j] && !isCombined[j + 1]) {
-                    int newValue = newRow[j] << 1;
-                    newRow[j + 1] = newValue;
-                    newRow[j] = 0;
-                    isCombined[j + 1] = true;
-                    isSlided = true;
-                    points += newValue;
-                }
-            }
+            boolean isSlided = this.slideRight(newRow);
             if (isSlided) {
                 this.gameField[i] = newRow;
                 isMoved = true;
             }
         }
         return isMoved;
+    }
+
+    /**
+     * Процедура сдвигания всех плиток вниз
+     *
+     * @return true - если был сделан сдвиг, false - если сдвига не было
+     */
+    private boolean moveDown() {
+        boolean isMoved = false;
+        for (int i = 0; i < SIDE_SIZE; i++) {
+            int[] newColumn = copyColumn(i);
+            boolean isSlided = this.slideRight(newColumn);
+            if (isSlided) {
+                this.insertColumn(newColumn, i);
+                isMoved = true;
+            }
+        }
+        return isMoved;
+    }
+
+    /**
+     * Процедура сдвигания всех чисел вправо для одномерного массива.
+     *
+     * @param arrayForSlide массив для сдвигания чисел в нем
+     * @return true - если был сделан сдвиг, false - если сдвига не было
+     */
+    private boolean slideRight(int[] arrayForSlide) {
+        boolean isSlided = false;
+        boolean[] isCombined = new boolean[SIDE_SIZE];
+        for (int j = SIDE_SIZE - 2; j >= 0; j--) {
+            if (arrayForSlide[j] == 0)
+                continue;
+            while (j != SIDE_SIZE - 1) {
+                if (arrayForSlide[j + 1] == 0) {
+                    arrayForSlide[j + 1] = arrayForSlide[j];
+                    arrayForSlide[j++] = 0;
+
+                    isSlided = true;
+                } else
+                    break;
+            }
+            if (j == SIDE_SIZE - 1)
+                continue;
+            if (arrayForSlide[j + 1] == arrayForSlide[j] && !isCombined[j + 1]) {
+                int newValue = arrayForSlide[j] << 1;
+                arrayForSlide[j + 1] = newValue;
+                arrayForSlide[j] = 0;
+                isCombined[j + 1] = true;
+                isSlided = true;
+                points += newValue;
+            }
+        }
+        return isSlided;
     }
 
     /**
