@@ -91,4 +91,40 @@ public class UtilMethodsTest {
         assertTrue(methodResult);
     }
 
+    /**
+     * Тест метода перемещения чисел в пустом одномерном массиве вправо.
+     * Т.к. метод приватный, тестируем его через рефлексию.
+     *
+     * @throws Exception - исключение рефлексии
+     */
+    @Test
+    void testSlideRightWithEmptyArray() throws Exception {
+        Game game = new Game();
+        int[] emptyArray = new int[]{0, 0, 0, 0};
+        Method slideRight = Game.class.getDeclaredMethod("slideRight", int[].class);
+        int[] expectedArray = new int[]{0, 0, 0, 0};
+        slideRight.setAccessible(true);
+        boolean methodResult = (boolean) slideRight.invoke(game, emptyArray);
+        assertArrayEquals(emptyArray, expectedArray);
+        assertFalse(methodResult);
+    }
+
+    /**
+     * Тест метода перемещения чисел в одномерном массиве вправо.
+     * Т.к. метод приватный, тестируем его через рефлексию.
+     *
+     * @throws Exception - исключение рефлексии
+     */
+    @Test
+    void testSlideRightWithSlide() throws Exception {
+        Game game = new Game();
+        int[] arrayForSlide = new int[]{4, 4, 4, 4};
+        Method slideRight = Game.class.getDeclaredMethod("slideRight", int[].class);
+        int[] expectedArray = new int[]{0, 0, 8, 8};
+        slideRight.setAccessible(true);
+        boolean methodResult = (boolean) slideRight.invoke(game, arrayForSlide);
+        assertArrayEquals(arrayForSlide, expectedArray);
+        assertTrue(methodResult);
+    }
+
 }
