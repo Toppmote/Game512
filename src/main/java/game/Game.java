@@ -3,6 +3,7 @@ package game;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
 
@@ -29,6 +30,63 @@ public class Game {
     public Game() {
         this.gameField = new int[SIDE_SIZE][SIDE_SIZE];
         this.points = 0;
+    }
+
+    /**
+     * Процедура запуска игры
+     */
+    public void startGame() {
+        this.printRules();
+        this.initField();
+        this.gameCycle();
+    }
+
+    /**
+     * Процедура запуска игрового цикла
+     */
+    private void gameCycle() {
+        Scanner scanner = new Scanner(System.in);
+        boolean isRunning = true;
+        while (isRunning) {
+            this.printField();
+            System.out.print("\nВаш ход: ");
+            String input = scanner.next();
+            if (input.length() != 1)
+                continue;
+            char ch = input.charAt(0);
+            boolean isMoved = false;
+            switch (ch) {
+                case 'w':
+                    isMoved = this.moveUp();
+                    break;
+                case 's':
+                    isMoved = this.moveDown();
+                    break;
+                case 'a':
+                    isMoved = this.moveLeft();
+                    break;
+                case 'd':
+                    isMoved = this.moveRight();
+                    break;
+                case 'q':
+                    System.out.println(System.lineSeparator() + "Спасибо за игру. Ваши очки: " + points);
+                    isRunning = false;
+                    break;
+                default:
+                    continue;
+            }
+            if (isMoved) {
+                if (this.checkWin()) {
+                    System.out.println(System.lineSeparator() + "Победа. Ваши очки: " + points);
+                    break;
+                }
+                if (this.checkLoss()) {
+                    System.out.println(System.lineSeparator() + "Поражение. Ваши очки: " + points);
+                    break;
+                }
+                this.generateNewFieldNumber();
+            }
+        }
     }
 
     /**
