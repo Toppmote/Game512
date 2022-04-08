@@ -2,6 +2,7 @@ import game.Game;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -126,5 +127,51 @@ public class UtilMethodsTest {
         assertArrayEquals(arrayForSlide, expectedArray);
         assertTrue(methodResult);
     }
+
+    /**
+     * Тест метода генерации нового числа на пустом поле. Генерируем число на каком-либо пустом месте.
+     * Т.к. метод приватный, тестируем его через рефлексию.
+     *
+     * @throws Exception - исключение рефлексии
+     */
+    @Test
+    void generateNewNumberOnEmptyField() throws Exception {
+        Game game = new Game();
+        Method initGameField = Game.class.getDeclaredMethod("generateNewFieldNumber");
+        initGameField.setAccessible(true);
+        initGameField.invoke(game);
+        int notNullValuesCount = (int) Arrays.stream(game.getField())
+                .flatMapToInt(Arrays::stream)
+                .filter(x -> x == 2)
+                .count();
+        assertEquals(1, notNullValuesCount);
+    }
+
+    /**
+     * Тест метода генерации нового числа на заполенном поле. Генерируем число на каком-либо пустом месте.
+     * Т.к. метод приватный, тестируем его через рефлексию.
+     *
+     * @throws Exception - исключение рефлексии
+     */
+    @Test
+    void generateNewNumberOnFilledField() throws Exception {
+        Game game = new Game();
+        int[][] startArray = new int[][]{
+                {4, 4, 8, 0},
+                {4, 8, 0, 8},
+                {4, 8, 8, 8},
+                {4, 8, 8, 0}
+        };
+        game.setField(startArray);
+        Method initGameField = Game.class.getDeclaredMethod("generateNewFieldNumber");
+        initGameField.setAccessible(true);
+        initGameField.invoke(game);
+        int notNullValuesCount = (int) Arrays.stream(game.getField())
+                .flatMapToInt(Arrays::stream)
+                .filter(x -> x == 2)
+                .count();
+        assertEquals(1, notNullValuesCount);
+    }
+
 
 }
