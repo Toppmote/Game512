@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -37,7 +38,9 @@ public class GameTest {
     /**
      * Тест печати правил игры перед её запуском.
      * Проверяем, что печатается в консоль.
-     * Т.к. метод приватный, запускаем его через рефлексию.
+     * Т.к. метод приватный, тестируем его через рефлексию.
+     *
+     * @throws Exception - исключение рефлексии
      */
     @Test
     void printRulesTest() throws Exception {
@@ -48,6 +51,25 @@ public class GameTest {
         printRules.setAccessible(true);
         printRules.invoke(new Game());
         assertEquals(outputStreamCaptor.toString(), RULES_STRING);
+    }
+
+    /**
+     * Тест стартовой инициализации поля. При старте игры на поле в случайном месте генерируются две цифры 2.
+     * Т.к. метод приватный, тестируем его через рефлексию.
+     *
+     * @throws Exception - исключение рефлексии
+     */
+    @Test
+    void initGameFieldTest() throws Exception {
+        Game game = new Game();
+        Method printRules = Game.class.getDeclaredMethod("initField");
+        printRules.setAccessible(true);
+        printRules.invoke(game);
+        int notNullValuesCount = (int) Arrays.stream(game.getField())
+                .flatMapToInt(Arrays::stream)
+                .filter(x -> x != 0)
+                .count();
+        assertEquals(2, notNullValuesCount);
     }
 
 }
