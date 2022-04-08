@@ -9,7 +9,7 @@ public class Game {
     private final int SIDE_SIZE = 4;
 
     /**
-     * Игровое поле
+     * игровое поле
      */
     private short[][] field;
 
@@ -21,6 +21,16 @@ public class Game {
     public Game() {
         this.field = new short[SIDE_SIZE][SIDE_SIZE];
         this.points = 0;
+    }
+
+    /**
+     * Процедура печати правил
+     */
+    private void printRules() {
+        final String RULES_STRING = "Game 512.\n" + "Двигайте цифры вверх вниз влево или право соединяя одинаковые цифры." +
+                "Как только значение одной клетки достигнет 512 - вы победили. Если вы не сможете больше двигать цифры - " +
+                "вы проиграли.\n";
+        System.out.print(RULES_STRING);
     }
 
     public short[][] getField() {
