@@ -213,6 +213,17 @@ public class Game {
             this.gameField[i][columnIndex] = insertableColumn[i];
     }
 
+    /**
+     * Функция проверки игры на выигрыш. Проверяем, имеет ли игровое поле ячейку со значением 512
+     *
+     * @return true - если выигрыш, false - если игра продолжается
+     */
+    private boolean checkWin() {
+        return Arrays.stream(gameField)
+                .flatMapToInt(Arrays::stream)
+                .max().orElse(0) == 512;
+    }
+
     public int[][] getField() {
         return gameField;
     }
