@@ -11,7 +11,7 @@ public class Game {
     /**
      * игровое поле
      */
-    private short[][] field;
+    private int[][] field;
 
     /**
      * Количество очков
@@ -19,7 +19,7 @@ public class Game {
     private int points;
 
     public Game() {
-        this.field = new short[SIDE_SIZE][SIDE_SIZE];
+        this.field = new int[SIDE_SIZE][SIDE_SIZE];
         this.points = 0;
     }
 
@@ -33,11 +33,11 @@ public class Game {
         System.out.print(RULES_STRING);
     }
 
-    public short[][] getField() {
+    public int[][] getField() {
         return field;
     }
 
-    public void setField(short[][] field) {
+    public void setField(int[][] field) {
         this.field = field;
     }
 
