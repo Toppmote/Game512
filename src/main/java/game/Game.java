@@ -1,5 +1,6 @@
 package game;
 
+import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -52,6 +53,47 @@ public class Game {
             else
                 i--;
         }
+    }
+
+    /**
+     * Функция сдвигания всех плиток влево
+     *
+     * @return true - если был сделан сдвиг, false - если сдвига не было
+     */
+    private boolean moveLeft() {
+        boolean isMoved = false;
+        for (int i = 0; i < SIDE_SIZE; i++) {
+            int[] newRow = Arrays.copyOf(this.gameField[i], SIDE_SIZE);
+            boolean isSlided = false;
+            boolean[] isCombined = new boolean[SIDE_SIZE];
+            for (int j = 1; j < SIDE_SIZE; j++) {
+                if (newRow[j] == 0)
+                    continue;
+                while (j != 0) {
+                    if (newRow[j - 1] == 0) {
+                        newRow[j - 1] = newRow[j];
+                        newRow[j--] = 0;
+                        isSlided = true;
+                    } else
+                        break;
+                }
+                if (j == 0)
+                    continue;
+                if (newRow[j - 1] == newRow[j] && !isCombined[j - 1]) {
+                    int newValue = newRow[j] << 1;
+                    newRow[j - 1] = newValue;
+                    newRow[j] = 0;
+                    isCombined[j - 1] = true;
+                    isSlided = true;
+                    points += newValue;
+                }
+            }
+            if (isSlided) {
+                this.gameField[i] = newRow;
+                isMoved = true;
+            }
+        }
+        return isMoved;
     }
 
     public int[][] getField() {
