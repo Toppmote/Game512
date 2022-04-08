@@ -63,9 +63,9 @@ public class GameTest {
     @Test
     void initGameFieldTest() throws Exception {
         Game game = new Game();
-        Method printRules = Game.class.getDeclaredMethod("initField");
-        printRules.setAccessible(true);
-        printRules.invoke(game);
+        Method initGameField = Game.class.getDeclaredMethod("initField");
+        initGameField.setAccessible(true);
+        initGameField.invoke(game);
         int notNullValuesCount = (int) Arrays.stream(game.getField())
                 .flatMapToInt(Arrays::stream)
                 .filter(x -> x != 0)
