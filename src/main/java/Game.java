@@ -1,3 +1,5 @@
+import java.util.concurrent.ThreadLocalRandom;
+
 /**
  * Класс игры
  */
@@ -31,6 +33,23 @@ public class Game {
                 "Как только значение одной клетки достигнет 512 - вы победили. Если вы не сможете больше двигать цифры - " +
                 "вы проиграли.\n";
         System.out.print(RULES_STRING);
+    }
+
+    /**
+     * Процедура генерации стартового поля. Генерируем две клетки со значением 2 в случайных местах игрового поля.
+     */
+    private void initField() {
+        final int INIT_POSITION_COUNT = 2;
+        ThreadLocalRandom random = ThreadLocalRandom.current();
+        for (int i = 0; i < INIT_POSITION_COUNT; i++) {
+            int position = random.nextInt(SIDE_SIZE << 1);
+            int row = position / SIDE_SIZE;
+            int column = position % SIDE_SIZE;
+            if (this.field[row][column] == 0)
+                this.field[row][column] = 2;
+            else
+                i--;
+        }
     }
 
     public int[][] getField() {
