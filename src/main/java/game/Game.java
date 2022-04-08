@@ -1,6 +1,8 @@
 package game;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
 
@@ -246,6 +248,20 @@ public class Game {
             return true;
         } else
             return false;
+    }
+
+    /**
+     * Процедура генерации нового числа на игровом поле
+     */
+    private void generateNewFieldNumber() {
+        List<int[]> zeroValueIndexes = new ArrayList<>();
+        for (int i = 0; i < SIDE_SIZE; i++)
+            for (int j = 0; j < SIDE_SIZE; j++)
+                if (gameField[i][j] == 0)
+                    zeroValueIndexes.add(new int[]{i, j});
+        int cellForInsert = ThreadLocalRandom.current().nextInt(zeroValueIndexes.size());
+        int[] indexes = zeroValueIndexes.get(cellForInsert);
+        this.gameField[indexes[0]][indexes[1]] = 2;
     }
 
     public int[][] getField() {
