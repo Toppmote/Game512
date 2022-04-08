@@ -73,4 +73,31 @@ public class GameTest {
         assertEquals(2, notNullValuesCount);
     }
 
+    /**
+     * Тест печати игрового поля в консоль.
+     * Т.к. метод приватный, тестируем его через рефлексию.
+     *
+     * @throws Exception - исключение рефлексии
+     */
+    @Test
+    void testPrintArrayMethod() throws Exception {
+        String lineSeparator = System.getProperty("line.separator");
+        final String PRINTED_ARRAY_STRING = lineSeparator + "4\t4\t8\t0\t" + lineSeparator +
+                "4\t8\t0\t8\t" + lineSeparator +
+                "4\t8\t8\t8\t" + lineSeparator +
+                "4\t8\t8\t0\t" + lineSeparator;
+        Game game = new Game();
+        int[][] startArray = new int[][]{
+                {4, 4, 8, 0},
+                {4, 8, 0, 8},
+                {4, 8, 8, 8},
+                {4, 8, 8, 0}
+        };
+        game.setField(startArray);
+        Method initGameField = Game.class.getDeclaredMethod("printField");
+        initGameField.setAccessible(true);
+        initGameField.invoke(game);
+        assertEquals(PRINTED_ARRAY_STRING, outputStreamCaptor.toString());
+    }
+
 }
