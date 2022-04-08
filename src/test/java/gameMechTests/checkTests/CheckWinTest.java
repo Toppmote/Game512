@@ -41,8 +41,8 @@ public class CheckWinTest {
     @Test
     void checkPositionWithoutWin() throws Exception {
         int[][] arrayWithoutWin = new int[][]{
-                {8, 5, 8, 0},
-                {4, 8, 3, 0},
+                {8, 2, 8, 0},
+                {4, 8, 4, 0},
                 {4, 2, 8, 0},
                 {4, 8, 0, 0}
         };
